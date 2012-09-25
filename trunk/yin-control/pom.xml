@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.yin.ycontrol</groupId>
+  <artifactId>yin-control</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>yin-control</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+	  <groupId>repository.javax.mail</groupId>
+	  <artifactId>mail</artifactId>
+	  <version>1.4</version>
+	</dependency>
+	<dependency>
+	  <groupId>repository.org.eclipse.jetty</groupId>
+	  <artifactId>jetty-server</artifactId>
+	  <version>8.1.0.RC1</version>
+	</dependency>
+	<dependency>
+	  <groupId>repository.org.eclipse.jetty</groupId>
+	  <artifactId>jetty-webapp</artifactId>
+	  <version>8.1.0.RC1</version>
+	</dependency>
+	<dependency>
+	  <groupId>repository.javax.servlet.jsp</groupId>
+	  <artifactId>jsp-api</artifactId>
+	  <version>2.1</version>
+	</dependency>
+	<dependency>
+	  <groupId>repository.org.glassfish.web</groupId>
+	  <artifactId>jsp-impl</artifactId>
+	  <version>2.2</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.greenline.message</groupId>
+	  <artifactId>greenline-message-service-share</artifactId>
+	  <version>1.2</version>
+	</dependency>
+  </dependencies>
+</project>
