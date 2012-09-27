@@ -1,9 +1,13 @@
 package com.yin.ycontrol.client.sms;
 
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.Properties;
+
 import com.greenline.message.biz.service.share.sms.SMSParamDTO;
 import com.greenline.message.biz.service.share.sms.SMSResultDTO;
 import com.greenline.message.biz.service.share.sms.SmsService;
+import com.yin.common.util.ConfigUtil;
 
 
 
@@ -16,11 +20,20 @@ import com.greenline.message.biz.service.share.sms.SmsService;
  */
 public class SmsClient {
     static SmsService service;
+    static Properties p;
     static {
-        String url = "http://211.144.79.37/message/hessian/sms";
+    	try {
+			InputStream in = ConfigUtil.class.getClassLoader()
+					.getResourceAsStream("sms.properties");
+			p = new Properties();
+			p.load(in);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+        String url = p.getProperty("url");
         SmsHessianProxyFactory proxy = new SmsHessianProxyFactory();
-        proxy.setClientid("07");
-        proxy.setPassword("635698");
+        proxy.setClientid(p.getProperty("clientId"));
+        proxy.setPassword(p.getProperty("password"));
         proxy.setCaller("95169");
         try {
             service =  (SmsService) proxy.create(SmsService.class, url,ClassLoader.getSystemClassLoader());
