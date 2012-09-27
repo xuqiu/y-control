@@ -8,57 +8,55 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.util.log.StdErrLog;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import com.yin.common.util.ConfigUtil;
+
 /**
  * @author hongxia.huhx GuahaoJettyServer for Jetty
  */
 public class JettyServer {
 
     /** port */
-    private int port = 11056;
+    private static int port = 11056;
 
-    protected String charset = "UTF-8";
+    public static int getPort() {
+		return port;
+	}
+
+	protected String charset = "UTF-8";
 
     public JettyServer() {
     }
 
-    public JettyServer(int port) {
-        this.port = port;
-    }
-
-    public JettyServer(int port, String charset) {
-        super();
-        this.port = port;
-        this.charset = charset;
-    }
-
     /**
-     * æœåŠ¡å™¨å¯åŠ¨ã€‚
+     * ·şÎñÆ÷Æô¶¯¡£
      * 
      * @throws ConfigurationException
      */
     public void start() {
-
-        // è®¾ç½®Jettyæ—¥å¿—
+    	try{
+    		port=Integer.parseInt(ConfigUtil.get("port"));
+    	}catch(Exception ex){}
+        // ÉèÖÃJettyÈÕÖ¾
         System.setProperty("org.eclipse.jetty.util.log.class", StdErrLog.class.getName());
 
         Server server = new Server();
 
-        // è®¾ç½®è¿æ¥å™¨
+        // ÉèÖÃÁ¬½ÓÆ÷
         Connector connector = new SelectChannelConnector();
         connector.setPort(this.port);
         connector.setRequestHeaderSize(16246);
         server.setConnectors(new Connector[] { connector });
 
-        // è®¾ç½®context
+        // ÉèÖÃcontext
         WebAppContext context = new WebAppContext();
         context.setResourceBase("./WebRoot");
         context.setContextPath("/");
-        // PS:åµŒå…¥å¼çš„Jettyï¼Œåº”ç”¨å½“å‰å·¥ç¨‹çš„ClassPathï¼Œå¦‚æœä¸è®¾ç½®å°†ä½¿ç”¨WebAppClassLoderï¼ŒWEB-INF/libç›®å½•åŠ è½½jarã€‚
+        // PS:Ç¶ÈëÊ½µÄJetty£¬Ó¦ÓÃµ±Ç°¹¤³ÌµÄClassPath£¬Èç¹û²»ÉèÖÃ½«Ê¹ÓÃWebAppClassLoder£¬WEB-INF/libÄ¿Â¼¼ÓÔØjar¡£
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         context.setParentLoaderPriority(true);
         server.setHandler(context);
 
-        // å¯åŠ¨Server
+        // Æô¶¯Server
         try {
             server.start();
             server.join();

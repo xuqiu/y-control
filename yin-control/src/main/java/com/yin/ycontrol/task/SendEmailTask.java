@@ -3,7 +3,10 @@ package com.yin.ycontrol.task;
 import java.util.TimerTask;
 import javax.servlet.ServletContext;
 
+import jetty.JettyServer;
+
 import com.yin.ycontrol.util.MailUtils;
+import com.yin.ycontrol.util.SmsUtil;
 import com.yin.ycontrol.util.UrlUtil;
 
 public class SendEmailTask extends TimerTask {
@@ -19,11 +22,13 @@ public class SendEmailTask extends TimerTask {
 		if (!isRunning&&!UpdateMacTask.isRunning) {
 			isRunning = true;
 			// -------------------开始保存当日历史记录
-
+			int port = JettyServer.getPort();
 			String newIP=UrlUtil.getUrl();
 			if(newIP!=null&&!newIP.equals(IP)){
 				IP=newIP;
-				MailUtils.send("ip",IP);
+				String message="http://"+IP+":"+port;
+				MailUtils.send("ycontrol-server",message);
+				SmsUtil.send(message);
 			}
 			// -------------------结束
 			isRunning = false;
