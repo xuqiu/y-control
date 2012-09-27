@@ -17,6 +17,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;  
 import javax.mail.internet.MimeMultipart;  
 import javax.mail.internet.MimeUtility;  
+
+import com.yin.common.util.ConfigUtil;
   
 /** 
  * <p> 
@@ -249,27 +251,21 @@ public class MailUtils {
   
       
     /** 
-     * <br> 
-     * 方法说明：主方法，用于测试 <br> 
-     * 输入参数： <br> 
-     * 返回类型： 
+	 *
      */  
     public static void send(String title,String content) {  
-        MailUtils sendmail = new MailUtils();  
-          
-        sendmail.setHost("smtp.gmail.com");  
-        sendmail.setUserName("yinzhennan123");  
-        sendmail.setPassWord("123qweqwe");  
-        sendmail.setTo("yinzhennan123@gmail.com");  
-        sendmail.setFrom("yinzhennan123@gmail.com");  
-        sendmail.setSubject(title);  
-        sendmail.setContent(content);  
-        // Mail sendmail = new  
-        // Mail("dujiang@sricnet.com","du_jiang@sohu.com","smtp.sohu.com","du_jiang","31415926","你好","胃，你好吗？");  
-//        sendmail.attachfile("d:\\news.rar");  
-//        sendmail.attachfile("d:\\jhjl.rar");  
-          
-        System.out.println(sendmail.sendMail());  
-  
+    	String email  = ConfigUtil.get("email");
+    	if(email!=null&&email.length()>0){
+	        MailUtils sendmail = new MailUtils();  
+	        
+	        sendmail.setHost("smtp.gmail.com");  
+	        sendmail.setUserName("ycontrolservice");  
+	        sendmail.setPassWord("123qweqwe");  
+	        sendmail.setTo(email);  
+	        sendmail.setFrom("ycontrolservice@gmail.com");  
+	        sendmail.setSubject(title);  
+	        sendmail.setContent(content);  
+	        System.out.println(sendmail.sendMail());  
+    	}
     }  
 }  
