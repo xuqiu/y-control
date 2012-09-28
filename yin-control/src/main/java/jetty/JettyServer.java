@@ -43,7 +43,7 @@ public class JettyServer {
 
         // …Ë÷√¡¨Ω”∆˜
         Connector connector = new SelectChannelConnector();
-        connector.setPort(this.port);
+        connector.setPort(port);
         connector.setRequestHeaderSize(16246);
         server.setConnectors(new Connector[] { connector });
 

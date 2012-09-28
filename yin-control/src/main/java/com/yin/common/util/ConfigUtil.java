@@ -1,11 +1,6 @@
 package com.yin.common.util;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 public final class ConfigUtil {
@@ -25,9 +20,8 @@ public final class ConfigUtil {
 	public static String get(String key){
 		if(p==null){
 			init();
-		}else{
-			return p.getProperty(key);
 		}
-		return null;
+		return p.getProperty(key);
+
 	}
 }

@@ -31,7 +31,7 @@ public class ControlServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		//在内存中创建图象
-
+		
 		ServletOutputStream output;
 		try {
 			String x = request.getParameter("x");
