@@ -27,17 +27,15 @@ public class SmsClient {
 					.getResourceAsStream("sms.properties");
 			p = new Properties();
 			p.load(in);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-        String url = p.getProperty("url");
-        SmsHessianProxyFactory proxy = new SmsHessianProxyFactory();
-        proxy.setClientid(p.getProperty("clientId"));
-        proxy.setPassword(p.getProperty("password"));
-        proxy.setCaller("95169");
-        try {
+
+	        String url = p.getProperty("url");
+	        SmsHessianProxyFactory proxy = new SmsHessianProxyFactory();
+	        proxy.setClientid(p.getProperty("clientId"));
+	        proxy.setPassword(p.getProperty("password"));
+	        proxy.setCaller("95169");
+
             service =  (SmsService) proxy.create(SmsService.class, url,ClassLoader.getSystemClassLoader());
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

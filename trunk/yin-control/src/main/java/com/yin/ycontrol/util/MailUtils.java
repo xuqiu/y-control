@@ -239,10 +239,6 @@ public class MailUtils {
             transport.close();  
         } catch (Exception mex) {  
             mex.printStackTrace();  
-//          Exception ex = null;  
-//          if ((ex = mex.getNextException()) != null) {  
-//              ex.printStackTrace();  
-//          }  
             return false;  
         }  
         return true;  
@@ -256,8 +252,7 @@ public class MailUtils {
     public static void send(String title,String content) {  
     	String email  = ConfigUtil.get("email");
     	if(email!=null&&email.length()>0){
-	        MailUtils sendmail = new MailUtils();  
-	        
+	        MailUtils sendmail = new MailUtils();
 	        sendmail.setHost("smtp.gmail.com");  
 	        sendmail.setUserName("ycontrolservice");  
 	        sendmail.setPassWord("123qweqwe");  
