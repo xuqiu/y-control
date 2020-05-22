@@ -29,7 +29,7 @@ public class JettyServer {
         if(port != null && port.matches("\\d+")){
             this.port = Integer.parseInt(port);
         }else{
-            System.out.println("端口设置有误, 将使用默认端口:"+this.port);
+            System.out.println("端口未设置或设置有误, 将使用默认端口:"+this.port);
         }
 
     }
