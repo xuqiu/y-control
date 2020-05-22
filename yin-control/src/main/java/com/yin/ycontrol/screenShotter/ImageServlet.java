@@ -1,27 +1,14 @@
 package com.yin.ycontrol.screenShotter;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.imageio.spi.ImageWriterSpi;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import sun.awt.image.PNGImageDecoder;
-
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.sun.imageio.plugins.png.PNGImageWriter;
 
 public class ImageServlet extends HttpServlet {
     /**

@@ -9,43 +9,37 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Date;
-
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
-/******************************************************************* 
- * ��JavaBean����ֱ��������JavaӦ�ó����е��ã�ʵ����Ļ��"����" 
- * This JavaBean is used to snapshot the GUI in a  
- * Java application! You can embeded 
- * it in to your java application source code, and us 
- * it to snapshot the right GUI of the application 
+/*******************************************************************
+ * This JavaBean is used to snapshot the GUI in a
+ * Java application! You can embeded
+ * it in to your java application source code, and us
+ * it to snapshot the right GUI of the application
  *
  *****************************************************/
 
 public class GuiCamera
 {
-    private String fileName; //�ļ���ǰ׺ 
+    private String fileName;
     private String defaultName = "GuiCamera";
     static int serialNum=0;
-    private String imageFormat; //ͼ���ļ��ĸ�ʽ 
+    private String imageFormat;
     private String defaultImageFormat="png";
     static Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
     static BufferedImage screenshot;
     static Date lasttime=new Date(new Date().getTime()-10000);
 
-    /**************************************************************** 
-     * Ĭ�ϵ��ļ�ǰ׺ΪGuiCamera���ļ���ʽΪPNG��ʽ 
-     * The default construct will use the default  
-     * Image file surname "GuiCamera",  
-     * and default image format "png" 
+    /****************************************************************
+     * The default construct will use the default
+     * Image file surname "GuiCamera",
+     * and default image format "png"
      ****************************************************************/
     public GuiCamera() {
         fileName = defaultName;
@@ -53,11 +47,10 @@ public class GuiCamera
 
     }
 
-    /**************************************************************** 
-     * @param s the surname of the snapshot file 
-     * @param format the format of the  image file,  
-     * it can be "jpg" or "png" 
-     * ������֧��JPG��PNG�ļ��Ĵ洢 
+    /****************************************************************
+     * @param s the surname of the snapshot file
+     * @param format the format of the  image file,
+     * it can be "jpg" or "png"
      ****************************************************************/
     public GuiCamera(String s,String format) {
 
@@ -65,32 +58,30 @@ public class GuiCamera
         imageFormat=format;
     }
 
-    /**************************************************************** 
-     * ����Ļ�������� 
-     * snapShot the Gui once 
+    /****************************************************************
+     * snapShot the Gui once
      ****************************************************************/
     public void snapShot(BufferedImage screenshot,String format) {
 
         try {
-            //������Ļ��һ��BufferedImage����screenshot
-            //�����ļ�ǰ׺�������ļ���ʽ�������Զ������ļ���
             Date start=new Date();
             String name=fileName+String.valueOf(serialNum)+"."+format;
             File f = new File(name);
             OutputStream   jos   =   new   FileOutputStream(   f  );
             System.out.print("Save File "+name);
-            JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   jos   );
-            JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   screenshot   );
-            jpegEP.setQuality(   (float)   0.1   ,   true   );
-            encoder.encode(   screenshot   ,   jpegEP   );
+//            JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   jos   );
+//            JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   screenshot   );
+//            jpegEP.setQuality(   (float)   0.1   ,   true   );
+//            encoder.encode(   screenshot   ,   jpegEP   );
 
+            ImageOutputStream ios = ImageIO.createImageOutputStream(jos);
+            ImageWriter imageWriter = ImageIO.getImageWritersBySuffix("png").next();
+            imageWriter.setOutput(ios);
+            imageWriter.write(screenshot);
+            jos.close();
+            imageWriter.dispose();
             serialNum++;
 
-
-
-            jos.flush();
-            jos.close();
-            //��screenshot����д��ͼ���ļ�
 
             //ImageIO.write(screenshot, format, f);
             Date end=new Date();
@@ -112,14 +103,11 @@ public class GuiCamera
                 screenshot = robot
                     .createScreenCapture(new Rectangle(0, 0,
                         (int) d.getWidth(), (int) d.getHeight()));
-                //�������
-                //��ȡ���λ��
                 Point p=java.awt.MouseInfo.getPointerInfo().getLocation();
                 Graphics g = screenshot.getGraphics();
                 g.setColor(Color.red);
                 g.fillRoundRect(p.x-10, p.y-10, 20, 20,40,40);
                 g.dispose();
-                //ѹ��
                 screenshot=getConvertedImage(screenshot);
             }
             return screenshot;
@@ -137,13 +125,11 @@ public class GuiCamera
         }
 
     }
-    //ѹ��ͼ��
     private static BufferedImage getConvertedImage(BufferedImage image){
         int width=image.getWidth();
         int height=image.getHeight();
-        BufferedImage convertedImage=null;
-        Graphics2D g2D=null;
-        //���ô�1 �ֽ�alpha��TYPE_4BYTE_ABGR�������޸����صĲ���͸��
+        BufferedImage convertedImage;
+        Graphics2D g2D;
         convertedImage=new BufferedImage(width, height, BufferedImage.TYPE_USHORT_555_RGB);
         g2D = (Graphics2D) convertedImage.getGraphics();
         g2D.drawImage(image, 0, 0, null);
