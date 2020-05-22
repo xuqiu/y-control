@@ -5,10 +5,10 @@ import java.io.*;
 import javax.imageio.*;
 
 /**
- * 创建透明的GIF图像
+ * 鍒涘缓閫忔槑鐨凣IF鍥惧儚
  * @author Winter Lau (javayou@gmail.com)
  * @url http://www.oschina.net
- * @date 2009-8-10 上午09:58:16
+ * @date 2009-8-10 涓婂崍09:58:16
  */
 public class GifExample {
     public static void main(String[] args) throws IOException {

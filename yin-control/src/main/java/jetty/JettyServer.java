@@ -28,7 +28,7 @@ public class JettyServer {
     }
 
     /**
-     * ·şÎñÆ÷Æô¶¯¡£
+     * æœåŠ¡å™¨å¯åŠ¨ã€‚
      * 
      * @throws ConfigurationException
      */
@@ -36,27 +36,27 @@ public class JettyServer {
     	try{
     		port=Integer.parseInt(ConfigUtil.get("port"));
     	}catch(Exception ex){}
-        // ÉèÖÃJettyÈÕÖ¾
+        // è®¾ç½®Jettyæ—¥å¿—
         System.setProperty("org.eclipse.jetty.util.log.class", StdErrLog.class.getName());
 
         Server server = new Server();
 
-        // ÉèÖÃÁ¬½ÓÆ÷
+        // è®¾ç½®è¿æ¥å™¨
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
         connector.setRequestHeaderSize(16246);
         server.setConnectors(new Connector[] { connector });
 
-        // ÉèÖÃcontext
+        // è®¾ç½®context
         WebAppContext context = new WebAppContext();
         context.setResourceBase("./WebRoot");
         context.setContextPath("/");
-        // PS:Ç¶ÈëÊ½µÄJetty£¬Ó¦ÓÃµ±Ç°¹¤³ÌµÄClassPath£¬Èç¹û²»ÉèÖÃ½«Ê¹ÓÃWebAppClassLoder£¬WEB-INF/libÄ¿Â¼¼ÓÔØjar¡£
+        // PS:åµŒå…¥å¼çš„Jettyï¼Œåº”ç”¨å½“å‰å·¥ç¨‹çš„ClassPathï¼Œå¦‚æœä¸è®¾ç½®å°†ä½¿ç”¨WebAppClassLoderï¼ŒWEB-INF/libç›®å½•åŠ è½½jarã€‚
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         context.setParentLoaderPriority(true);
         server.setHandler(context);
 
-        // Æô¶¯Server
+        // å¯åŠ¨Server
         try {
             server.start();
             server.join();

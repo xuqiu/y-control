@@ -12,6 +12,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	  <java.version>6</java.version>
+	  <maven.compiler.source>6</maven.compiler.source>
+	  <maven.compiler.target>6</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -22,39 +25,24 @@
       <scope>test</scope>
     </dependency>
 	<dependency>
-	  <groupId>repository.javax.mail</groupId>
-	  <artifactId>mail</artifactId>
-	  <version>1.4</version>
-	</dependency>
-	<dependency>
-	  <groupId>repository.org.eclipse.jetty</groupId>
+	  <groupId>org.eclipse.jetty</groupId>
 	  <artifactId>jetty-server</artifactId>
 	  <version>8.1.0.RC1</version>
 	</dependency>
 	<dependency>
-	  <groupId>repository.org.eclipse.jetty</groupId>
+	  <groupId>org.eclipse.jetty</groupId>
 	  <artifactId>jetty-webapp</artifactId>
 	  <version>8.1.0.RC1</version>
 	</dependency>
 	<dependency>
-	  <groupId>repository.javax.servlet.jsp</groupId>
+	  <groupId>javax.servlet.jsp</groupId>
 	  <artifactId>jsp-api</artifactId>
 	  <version>2.1</version>
 	</dependency>
 	<dependency>
-	  <groupId>repository.org.glassfish.web</groupId>
+	  <groupId>org.glassfish.web</groupId>
 	  <artifactId>jsp-impl</artifactId>
 	  <version>2.2</version>
-	</dependency>
-	<dependency>
-	  <groupId>com.greenline.message</groupId>
-	  <artifactId>greenline-message-service-share</artifactId>
-	  <version>1.2</version>
-	</dependency>
-	<dependency>
-	  <groupId>repository.com.caucho</groupId>
-	  <artifactId>hessian</artifactId>
-	  <version>4.0.7</version>
 	</dependency>
   </dependencies>
 </project>

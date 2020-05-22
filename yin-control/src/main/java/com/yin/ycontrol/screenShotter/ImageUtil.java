@@ -11,125 +11,125 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImageUtil {
-	private static final int CATCH_SIZE = 20;
-	private static final int INTERVAL = 200;
-	private static Long frame = 1L;
-	static BufferedImage lastImage = null;
-	static BufferedImage currentImage = null;
-	private static Map<Long, BufferedImage> imageCache = new HashMap<Long, BufferedImage>();
-	static Date last = null;
-	
-	/**
-	 * 
-	 * @param min ¿Í»§¶Ë×îºóÒ»Ö¡µÄ±àºÅ
-	 * @param max ¿Í»§¶Ë¸Õ¸Õ»ñÈ¡µÄ×îĞÂÒ»Ö¡µÄ±àºÅ(ÔÚÇëÇóÍ¼ÏñÇ°µ÷ÓÃ½Ó¿Ú»ñÈ¡)
-	 * @return
-	 */
-	public static BufferedImage getImage(Long min,Long max){
+    private static final int CATCH_SIZE = 20;
+    private static final int INTERVAL = 200;
+    private static Long frame = 1L;
+    static BufferedImage lastImage = null;
+    static BufferedImage currentImage = null;
+    private static Map<Long, BufferedImage> imageCache = new HashMap<Long, BufferedImage>();
+    static Date last = null;
 
-		Date now = new Date();
-		//Ê±¼ä¼ä¸ô´óÓÚINTERVALÊ±²ÅË¢ĞÂÍ¼Ïñ(
-		//ÓÅµã:1Ã»ÓĞÇëÇóÊ±·şÎñ¶Ë²»»á×Ô¼ºË¢Ñ°Í¼Ïñ
-		//	   2ÇëÇóÊıÁ¿ÔÙ¶à,Ò²²»»áÔì³ÉÄÚ´æÑ¹Á¦,´ó¼Ò¹²Ïí»º´æÍ¼Æ¬×ÊÔ´
-		if(last==null||now.getTime()-last.getTime()>INTERVAL){
-			currentImage = GuiCamera.screenShot();
-			BufferedImage cache = ImageUtil.subImage(lastImage, currentImage);
-			//»º´æ±ä»¯²¿·Ö
-			if(lastImage!=null){
-				catchImage(cache);
-			}
-			lastImage=currentImage;
-			last=now;
-		}
-		
-		//»ñÈ¡ĞèÒªµÄÍ¼Ïñ
-		//Èç¹ûÊ±¼ä¹ı³¤,·µ»ØÕûÕÅÍ¼Ïñ. ·ñÔòÖ»·µ»Ø±ä»¯µÄ²»·Ö
-		if(imageCache.get(min)==null){
-			return currentImage;
-		}else if(min>=max){//Ò²ĞíÊÇ¿Í»§¶ËÇëÇó¹ı¿ì)
-			return empty();
-		}else{
-			return getImageCatch(min,max);
-		}
-	}
-	
-	private static void catchImage(BufferedImage image){
-		if(frame>=9223372036854775806L){//·ÀÖ¹Ô½½ç
-			frame=0L;
-			imageCache=new HashMap<Long, BufferedImage>();
-		}
-		imageCache.put(frame, image);
-		if(imageCache.size()>CATCH_SIZE){
-			imageCache.remove(new Long(frame-CATCH_SIZE));
-		}
-		frame+=1;
-	}
-	private static BufferedImage getImageCatch(Long min,Long max){
-		BufferedImage result = null;
-		for(Long i=min+1;i<=max;i++){
-			result=drawCache(result,imageCache.get(i));
-		}
-		return result;
-	}
+    /**
+     *
+     * @param min å®¢æˆ·ç«¯æœ€åä¸€å¸§çš„ç¼–å·
+     * @param max å®¢æˆ·ç«¯åˆšåˆšè·å–çš„æœ€æ–°ä¸€å¸§çš„ç¼–å·(åœ¨è¯·æ±‚å›¾åƒå‰è°ƒç”¨æ¥å£è·å–)
+     * @return
+     */
+    public static BufferedImage getImage(Long min,Long max){
 
-	public static BufferedImage drawCache(BufferedImage image,BufferedImage cache){
-		if(image==null){
-			return cache;
-		}
-		int width = cache.getWidth();
-		int height = cache.getHeight();
-		for(int x=0;x<width;x++){
-			for(int y=0;y<height;y++){
-				int p=cache.getRGB(x, y);
-				Color c=new Color(p);
-				if(c.getAlpha()==0){
-					image.setRGB(x, y, p);
-				}
-				
-			}
-		}
-		return image;
-	}
-	/**
-	 * ·µ»ØĞÂ¾ÉÍ¼Æ¬µÄ²îÒì
-	 * @param image1 ¾ÉÍ¼Æ¬
-	 * @param image2 ĞÂÍ¼Æ¬
-	 * @return ·µ»ØĞÂ¾ÉÍ¼Æ¬µÄ²îÒì
-	 */
-	public static BufferedImage subImage(BufferedImage image1, BufferedImage image2){
-		if(image1==null){
-			return image2;
-		}
-		int width = image1.getWidth();
-		int height = image1.getHeight();
-	     //²ÉÓÃ´ø1 ×Ö½ÚalphaµÄTYPE_4BYTE_ABGR£¬¿ÉÒÔĞŞ¸ÄÏñËØµÄ²¼¶ûÍ¸Ã÷  
-	    
-		IndexColorModel cm = createIndexColorModel();
-		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED,cm);
-		
+        Date now = new Date();
+        //æ—¶é—´é—´éš”å¤§äºINTERVALæ—¶æ‰åˆ·æ–°å›¾åƒ(
+        //ä¼˜ç‚¹:1æ²¡æœ‰è¯·æ±‚æ—¶æœåŠ¡ç«¯ä¸ä¼šè‡ªå·±åˆ·å¯»å›¾åƒ
+        //	   2è¯·æ±‚æ•°é‡å†å¤š,ä¹Ÿä¸ä¼šé€ æˆå†…å­˜å‹åŠ›,å¤§å®¶å…±äº«ç¼“å­˜å›¾ç‰‡èµ„æº
+        if(last==null||now.getTime()-last.getTime()>INTERVAL){
+            currentImage = GuiCamera.screenShot();
+            BufferedImage cache = ImageUtil.subImage(lastImage, currentImage);
+            //ç¼“å­˜å˜åŒ–éƒ¨åˆ†
+            if(lastImage!=null){
+                catchImage(cache);
+            }
+            lastImage=currentImage;
+            last=now;
+        }
 
-		for(int x=0;x<width;x++){
-			for(int y=0;y<height;y++){
-				int p1=image1.getRGB(x, y);
-				int p2=image2.getRGB(x, y);
-				if(p1!=p2){
-					result.setRGB(x, y, p2);
-				}
-				
-			}
-		}
-		
-		return result;
-	}
-	public static BufferedImage empty(){
-		int width = lastImage.getWidth();
-		int height = lastImage.getHeight();
-	     //²ÉÓÃ´ø1 ×Ö½ÚalphaµÄTYPE_4BYTE_ABGR£¬¿ÉÒÔĞŞ¸ÄÏñËØµÄ²¼¶ûÍ¸Ã÷  
-	    
-		IndexColorModel cm = createIndexColorModel();
-		BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED,cm);
-		return result;
-	}
+        //è·å–éœ€è¦çš„å›¾åƒ
+        //å¦‚æœæ—¶é—´è¿‡é•¿,è¿”å›æ•´å¼ å›¾åƒ. å¦åˆ™åªè¿”å›å˜åŒ–çš„ä¸åˆ†
+        if(imageCache.get(min)==null){
+            return currentImage;
+        }else if(min>=max){//ä¹Ÿè®¸æ˜¯å®¢æˆ·ç«¯è¯·æ±‚è¿‡å¿«)
+            return empty();
+        }else{
+            return getImageCatch(min,max);
+        }
+    }
+
+    private static void catchImage(BufferedImage image){
+        if(frame>=9223372036854775806L){//é˜²æ­¢è¶Šç•Œ
+            frame=0L;
+            imageCache=new HashMap<Long, BufferedImage>();
+        }
+        imageCache.put(frame, image);
+        if(imageCache.size()>CATCH_SIZE){
+            imageCache.remove(new Long(frame-CATCH_SIZE));
+        }
+        frame+=1;
+    }
+    private static BufferedImage getImageCatch(Long min,Long max){
+        BufferedImage result = null;
+        for(Long i=min+1;i<=max;i++){
+            result=drawCache(result,imageCache.get(i));
+        }
+        return result;
+    }
+
+    public static BufferedImage drawCache(BufferedImage image,BufferedImage cache){
+        if(image==null){
+            return cache;
+        }
+        int width = cache.getWidth();
+        int height = cache.getHeight();
+        for(int x=0;x<width;x++){
+            for(int y=0;y<height;y++){
+                int p=cache.getRGB(x, y);
+                Color c=new Color(p);
+                if(c.getAlpha()==0){
+                    image.setRGB(x, y, p);
+                }
+
+            }
+        }
+        return image;
+    }
+    /**
+     * è¿”å›æ–°æ—§å›¾ç‰‡çš„å·®å¼‚
+     * @param image1 æ—§å›¾ç‰‡
+     * @param image2 æ–°å›¾ç‰‡
+     * @return è¿”å›æ–°æ—§å›¾ç‰‡çš„å·®å¼‚
+     */
+    public static BufferedImage subImage(BufferedImage image1, BufferedImage image2){
+        if(image1==null){
+            return image2;
+        }
+        int width = image1.getWidth();
+        int height = image1.getHeight();
+        //é‡‡ç”¨å¸¦1 å­—èŠ‚alphaçš„TYPE_4BYTE_ABGRï¼Œå¯ä»¥ä¿®æ”¹åƒç´ çš„å¸ƒå°”é€æ˜
+
+        IndexColorModel cm = createIndexColorModel();
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED,cm);
+
+
+        for(int x=0;x<width;x++){
+            for(int y=0;y<height;y++){
+                int p1=image1.getRGB(x, y);
+                int p2=image2.getRGB(x, y);
+                if(p1!=p2){
+                    result.setRGB(x, y, p2);
+                }
+
+            }
+        }
+
+        return result;
+    }
+    public static BufferedImage empty(){
+        int width = lastImage.getWidth();
+        int height = lastImage.getHeight();
+        //é‡‡ç”¨å¸¦1 å­—èŠ‚alphaçš„TYPE_4BYTE_ABGRï¼Œå¯ä»¥ä¿®æ”¹åƒç´ çš„å¸ƒå°”é€æ˜
+
+        IndexColorModel cm = createIndexColorModel();
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED,cm);
+        return result;
+    }
     static IndexColorModel createIndexColorModel() {
         BufferedImage ex = new BufferedImage(1, 1, BufferedImage.TYPE_BYTE_INDEXED);
         IndexColorModel icm = (IndexColorModel) ex.getColorModel();
@@ -146,6 +146,6 @@ public class ImageUtil {
         return  new IndexColorModel(8, SIZE, r, g, b, a);
     }
     public static Long getFrame(){
-    	return frame;
+        return frame;
     }
 }

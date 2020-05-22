@@ -3,9 +3,9 @@ package com.yin.ycontrol.util;
 public class NetUtil {
 	public static void restartNet(){
 		try{
-		      Runtime.getRuntime().exec("netsh interface set interface name=\"本地连接\" admin=DISABLED");
+		      Runtime.getRuntime().exec("netsh interface set interface name=\"鏈湴杩炴帴\" admin=DISABLED");
 		      Thread.sleep(20000);
-		      Runtime.getRuntime().exec("netsh interface set interface name=\"本地连接\" admin=ENABLED");
+		      Runtime.getRuntime().exec("netsh interface set interface name=\"鏈湴杩炴帴\" admin=ENABLED");
 		}catch(Exception   e){
 		    System.out.println(e.getMessage());
 		} 

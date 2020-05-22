@@ -24,51 +24,51 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.sun.imageio.plugins.png.PNGImageWriter;
 
 public class ImageServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7241394871084993707L;
-	/**
-	 * Ö´ĞĞµÇÂ½µÄÒµÎñ´¦Àí
-	 * @param request:·¢ËÍÉÏÀ´µÄÇëÇó
-	 * @return destJsp£ºÄ¿±êURL
-	 */
-	@Override
-	public void service(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		//ÉèÖÃÒ³Ãæ²»»º´æ
-		response.setHeader("Pragma", "No-cache");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-		//»ñÈ¡×îĞÂÖ¡Êı
-		if(request.getParameter("lastframe")!=null){
-			response.getWriter().write(ImageUtil.getFrame()+"");
-			response.getWriter().close();
-			return;
-		}
-		//»ñÈ¡Í¼Æ¬
-		ServletOutputStream output;
-		try {
-			output = response.getOutputStream();
-			
-			Long min=0l;
-			Long max=0l;
-			try{
-				String minStr=request.getParameter("min");
-				String maxStr=request.getParameter("max");
-				min=Long.parseLong(minStr);
-				max=Long.parseLong(maxStr);
-			}catch(Exception ex){}
-				BufferedImage image = ImageUtil.getImage(min, max);
-				//ImageIO.write(image, "gif", new File("C://test"+new Date().getTime()+".gif"));
-		    	ImageIO.write(image, "gif", output);
-	    	 // Êä³öÍ¼Ïóµ½Ò³Ãæ
-	    	  output.flush(); 
-	    	  output.close();
-			//ImageIO.write(image, "PNG", output);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7241394871084993707L;
+    /**
+     * æ‰§è¡Œç™»é™†çš„ä¸šåŠ¡å¤„ç†
+     * @param request:å‘é€ä¸Šæ¥çš„è¯·æ±‚
+     * @return destJspï¼šç›®æ ‡URL
+     */
+    @Override
+    public void service(HttpServletRequest request,
+        HttpServletResponse response) throws IOException,ServletException{
+        //è®¾ç½®é¡µé¢ä¸ç¼“å­˜
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        //è·å–æœ€æ–°å¸§æ•°
+        if(request.getParameter("lastframe")!=null){
+            response.getWriter().write(ImageUtil.getFrame()+"");
+            response.getWriter().close();
+            return;
+        }
+        //è·å–å›¾ç‰‡
+        ServletOutputStream output;
+        try {
+            output = response.getOutputStream();
+
+            Long min=0l;
+            Long max=0l;
+            try{
+                String minStr=request.getParameter("min");
+                String maxStr=request.getParameter("max");
+                min=Long.parseLong(minStr);
+                max=Long.parseLong(maxStr);
+            }catch(Exception ex){}
+            BufferedImage image = ImageUtil.getImage(min, max);
+            //ImageIO.write(image, "gif", new File("C://test"+new Date().getTime()+".gif"));
+            ImageIO.write(image, "gif", output);
+            // è¾“å‡ºå›¾è±¡åˆ°é¡µé¢
+            output.flush();
+            output.close();
+            //ImageIO.write(image, "PNG", output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

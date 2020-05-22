@@ -19,42 +19,42 @@ import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class VedioServlet extends HttpServlet {
-	/**
-	 * Ö´ĞĞµÇÂ½µÄÒµÎñ´¦Àí
-	 * @param request:·¢ËÍÉÏÀ´µÄÇëÇó
-	 * @return destJsp£ºÄ¿±êURL
-	 */
-	public void service(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		//ÉèÖÃÒ³Ãæ²»»º´æ
-		response.setHeader("Pragma", "No-cache");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-		//ÔÚÄÚ´æÖĞ´´½¨Í¼Ïó
-		
+    /**
+     * æ‰§è¡Œç™»é™†çš„ä¸šåŠ¡å¤„ç†
+     * @param request:å‘é€ä¸Šæ¥çš„è¯·æ±‚
+     * @return destJspï¼šç›®æ ‡URL
+     */
+    public void service(HttpServletRequest request,
+        HttpServletResponse response) throws IOException,ServletException{
+        //è®¾ç½®é¡µé¢ä¸ç¼“å­˜
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        //åœ¨å†…å­˜ä¸­åˆ›å»ºå›¾è±¡
 
-		ServletOutputStream output;
-		output = response.getOutputStream();
-		try {
-			while(true){
-				BufferedImage image = GuiCamera.screenShot();
-				JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   output   ); 
-		    	  JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   image   ); 
-		    	  jpegEP.setQuality(   (float)   0.3   ,   true   ); 
-		    	  encoder.encode(   image   ,   jpegEP   ); 
-				// Êä³öÍ¼Ïóµ½Ò³Ãæ
-		    	  output.flush(); 
-		    	  try{
-		    	  Thread.sleep(200);
-		    	  }catch(InterruptedException e){
-		    		  
-		    	  }
-			}
-			//ImageIO.write(image, "PNG", output);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
-			output.close();
-		}
-	}
+
+        ServletOutputStream output;
+        output = response.getOutputStream();
+        try {
+            while(true){
+                BufferedImage image = GuiCamera.screenShot();
+                JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   output   );
+                JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   image   );
+                jpegEP.setQuality(   (float)   0.3   ,   true   );
+                encoder.encode(   image   ,   jpegEP   );
+                // è¾“å‡ºå›¾è±¡åˆ°é¡µé¢
+                output.flush();
+                try{
+                    Thread.sleep(200);
+                }catch(InterruptedException e){
+
+                }
+            }
+            //ImageIO.write(image, "PNG", output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            output.close();
+        }
+    }
 }

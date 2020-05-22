@@ -3,29 +3,27 @@ package com.yin.ycontrol.task;
 import java.util.TimerTask;
 import javax.servlet.ServletContext;
 
-//import com.yin.ycontrol.util.NetUtil;
-//import com.yin.ycontrol.util.RegistryUtil;
 
 public class UpdateMacTask extends TimerTask {
-	public static boolean isRunning = false;
-	private ServletContext context = null;
+    public static boolean isRunning = false;
+    private ServletContext context = null;
 
-	public UpdateMacTask(ServletContext context) {
-		this.context = context;
-	}
+    public UpdateMacTask(ServletContext context) {
+        this.context = context;
+    }
 
-	public void run() {
-		if (!isRunning) {
-			isRunning = true;
-			// -------------------¿ªÊ¼±£´æµ±ÈÕÀúÊ·¼ÇÂ¼
+    public void run() {
+        if (!isRunning) {
+            isRunning = true;
+            // -------------------å¼€å§‹ä¿å­˜å½“æ—¥å†å²è®°å½•
 
-			//RegistryUtil.updateMac();
-			//NetUtil.restartNet();
-			// -------------------½áÊø
-			isRunning = false;
-		}else {
-			context.log("ÉÏÒ»´ÎÈÎÎñÖ´ĞĞ»¹Î´½áÊø");
-		}
-	}
+            //RegistryUtil.updateMac();
+            //NetUtil.restartNet();
+            // -------------------ç»“æŸ
+            isRunning = false;
+        }else {
+            context.log("ä¸Šä¸€æ¬¡ä»»åŠ¡æ‰§è¡Œè¿˜æœªç»“æŸ");
+        }
+    }
 
 }

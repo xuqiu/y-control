@@ -1,14 +1,14 @@
 package com.yin.ycontrol.screenShotter;
 
 import java.awt.Color;
-import java.awt.Dimension; 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle; 
-import java.awt.Robot; 
-import java.awt.Toolkit; 
-import java.awt.image.BufferedImage; 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,146 +22,146 @@ import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /******************************************************************* 
- * ¸ÃJavaBean¿ÉÒÔÖ±½ÓÔÚÆäËûJavaÓ¦ÓÃ³ÌÐòÖÐµ÷ÓÃ£¬ÊµÏÖÆÁÄ»µÄ"ÅÄÕÕ" 
+ * ï¿½ï¿½JavaBeanï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JavaÓ¦ï¿½Ã³ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ã£ï¿½Êµï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½" 
  * This JavaBean is used to snapshot the GUI in a  
  * Java application! You can embeded 
  * it in to your java application source code, and us 
  * it to snapshot the right GUI of the application 
- * 
+ *
  *****************************************************/
 
-public class GuiCamera 
-{   
-    private String fileName; //ÎÄ¼þµÄÇ°×º 
-    private String defaultName = "GuiCamera"; 
-    static int serialNum=0; 
-    private String imageFormat; //Í¼ÏñÎÄ¼þµÄ¸ñÊ½ 
-    private String defaultImageFormat="png"; 
+public class GuiCamera
+{
+    private String fileName; //ï¿½Ä¼ï¿½ï¿½ï¿½Ç°×º 
+    private String defaultName = "GuiCamera";
+    static int serialNum=0;
+    private String imageFormat; //Í¼ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä¸ï¿½Ê½ 
+    private String defaultImageFormat="png";
     static Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
     static BufferedImage screenshot;
     static Date lasttime=new Date(new Date().getTime()-10000);
 
     /**************************************************************** 
-     * Ä¬ÈÏµÄÎÄ¼þÇ°×ºÎªGuiCamera£¬ÎÄ¼þ¸ñÊ½ÎªPNG¸ñÊ½ 
+     * Ä¬ï¿½Ïµï¿½ï¿½Ä¼ï¿½Ç°×ºÎªGuiCameraï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ê½ÎªPNGï¿½ï¿½Ê½ 
      * The default construct will use the default  
      * Image file surname "GuiCamera",  
      * and default image format "png" 
-     ****************************************************************/ 
-    public GuiCamera() { 
-      fileName = defaultName; 
-      imageFormat=defaultImageFormat; 
-     
+     ****************************************************************/
+    public GuiCamera() {
+        fileName = defaultName;
+        imageFormat=defaultImageFormat;
+
     }
 
     /**************************************************************** 
      * @param s the surname of the snapshot file 
      * @param format the format of the  image file,  
      * it can be "jpg" or "png" 
-     * ±¾¹¹ÔìÖ§³ÖJPGºÍPNGÎÄ¼þµÄ´æ´¢ 
-     ****************************************************************/ 
-    public GuiCamera(String s,String format) { 
-     
-      fileName = s; 
-      imageFormat=format; 
-    } 
-     
-    /**************************************************************** 
-     * ¶ÔÆÁÄ»½øÐÐÅÄÕÕ 
-     * snapShot the Gui once 
-     ****************************************************************/ 
-    public void snapShot(BufferedImage screenshot,String format) { 
-     
-      try { 
-      //¿½±´ÆÁÄ»µ½Ò»¸öBufferedImage¶ÔÏóscreenshot 
-    	//¸ù¾ÝÎÄ¼þÇ°×º±äÁ¿ºÍÎÄ¼þ¸ñÊ½±äÁ¿£¬×Ô¶¯Éú³ÉÎÄ¼þÃû 
-    	  Date start=new Date();
-          String name=fileName+String.valueOf(serialNum)+"."+format; 
-          File f = new File(name); 
-          OutputStream   jos   =   new   FileOutputStream(   f  ); 
-          System.out.print("Save File "+name); 
-    	  JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   jos   ); 
-    	  JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   screenshot   ); 
-    	  jpegEP.setQuality(   (float)   0.1   ,   true   ); 
-    	  encoder.encode(   screenshot   ,   jpegEP   ); 
-    	  
-        serialNum++; 
-        
-        
-        
-        jos.flush(); 
-  	  	jos.close();
-      //½«screenshot¶ÔÏóÐ´ÈëÍ¼ÏñÎÄ¼þ 
-        
-        //ImageIO.write(screenshot, format, f); 
-        Date end=new Date();
-        System.out.print("..Finished! Cost "+(end.getTime()-start.getTime())+"\n"); 
-      } 
-      catch (Exception ex) { 
-    	  ex.printStackTrace();
-        System.out.println(ex); 
-      } 
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½JPGï¿½ï¿½PNGï¿½Ä¼ï¿½ï¿½Ä´æ´¢ 
+     ****************************************************************/
+    public GuiCamera(String s,String format) {
+
+        fileName = s;
+        imageFormat=format;
     }
 
-	public static BufferedImage screenShot() {
-		
-		try {
-			Date now=new Date();
-			if(now.getTime()-lasttime.getTime()>100){
-				lasttime=now;
-				Robot robot =new Robot();
-				screenshot = robot
-						.createScreenCapture(new Rectangle(0, 0,
-								(int) d.getWidth(), (int) d.getHeight()));
-				//»æÖÆÊó±ê
-				//»ñÈ¡Êó±êÎ»ÖÃ
-				Point p=java.awt.MouseInfo.getPointerInfo().getLocation();
-				Graphics g = screenshot.getGraphics();  
-				g.setColor(Color.red);
-				g.fillRoundRect(p.x-10, p.y-10, 20, 20,40,40);
-				g.dispose();
-				//Ñ¹Ëõ
-				screenshot=getConvertedImage(screenshot);
-			}
-			return screenshot;
-		} catch (Exception ex) {
-			System.out.println(ex);
-			BufferedImage error = new BufferedImage(100, 100,
-					BufferedImage.TYPE_INT_RGB);
-			// Get drawing context
-			Graphics g = error.getGraphics();
-			// Fill background
-			g.setColor(Color.blue);
-			g.drawString("»ñÈ¡ÆÁÄ»Í¼Ïñ³ö´í", 10, 10);
-			g.dispose();
-			return error;
-		}
+    /**************************************************************** 
+     * ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+     * snapShot the Gui once 
+     ****************************************************************/
+    public void snapShot(BufferedImage screenshot,String format) {
 
-	}
-	//Ñ¹ËõÍ¼Ïñ
-	 private static BufferedImage getConvertedImage(BufferedImage image){  
-	     int width=image.getWidth();  
-	     int height=image.getHeight();  
-	     BufferedImage convertedImage=null;  
-	     Graphics2D g2D=null;  
-	     //²ÉÓÃ´ø1 ×Ö½ÚalphaµÄTYPE_4BYTE_ABGR£¬¿ÉÒÔÐÞ¸ÄÏñËØµÄ²¼¶ûÍ¸Ã÷  
-	     convertedImage=new BufferedImage(width, height, BufferedImage.TYPE_USHORT_555_RGB);  
-	     g2D = (Graphics2D) convertedImage.getGraphics();  
-	     g2D.drawImage(image, 0, 0, null);  
-	     g2D.drawImage(convertedImage, 0, 0, null);  
-	     g2D.dispose();
-	     return convertedImage;  
-	 }  
+        try {
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ò»ï¿½ï¿½BufferedImageï¿½ï¿½ï¿½ï¿½screenshot
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+            Date start=new Date();
+            String name=fileName+String.valueOf(serialNum)+"."+format;
+            File f = new File(name);
+            OutputStream   jos   =   new   FileOutputStream(   f  );
+            System.out.print("Save File "+name);
+            JPEGImageEncoder   encoder   =   JPEGCodec.createJPEGEncoder(   jos   );
+            JPEGEncodeParam   jpegEP   =   JPEGCodec.getDefaultJPEGEncodeParam(   screenshot   );
+            jpegEP.setQuality(   (float)   0.1   ,   true   );
+            encoder.encode(   screenshot   ,   jpegEP   );
 
-    public static void main(String[] args) 
-    { 
+            serialNum++;
+
+
+
+            jos.flush();
+            jos.close();
+            //ï¿½ï¿½screenshotï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Í¼ï¿½ï¿½ï¿½Ä¼ï¿½
+
+            //ImageIO.write(screenshot, format, f);
+            Date end=new Date();
+            System.out.print("..Finished! Cost "+(end.getTime()-start.getTime())+"\n");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println(ex);
+        }
+    }
+
+    public static BufferedImage screenShot() {
+
+        try {
+            Date now=new Date();
+            if(now.getTime()-lasttime.getTime()>100){
+                lasttime=now;
+                Robot robot =new Robot();
+                screenshot = robot
+                    .createScreenCapture(new Rectangle(0, 0,
+                        (int) d.getWidth(), (int) d.getHeight()));
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                //ï¿½ï¿½È¡ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+                Point p=java.awt.MouseInfo.getPointerInfo().getLocation();
+                Graphics g = screenshot.getGraphics();
+                g.setColor(Color.red);
+                g.fillRoundRect(p.x-10, p.y-10, 20, 20,40,40);
+                g.dispose();
+                //Ñ¹ï¿½ï¿½
+                screenshot=getConvertedImage(screenshot);
+            }
+            return screenshot;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            BufferedImage error = new BufferedImage(100, 100,
+                BufferedImage.TYPE_INT_RGB);
+            // Get drawing context
+            Graphics g = error.getGraphics();
+            // Fill background
+            g.setColor(Color.blue);
+            g.drawString("ï¿½ï¿½È¡ï¿½ï¿½Ä»Í¼ï¿½ï¿½ï¿½ï¿½ï¿½", 10, 10);
+            g.dispose();
+            return error;
+        }
+
+    }
+    //Ñ¹ï¿½ï¿½Í¼ï¿½ï¿½
+    private static BufferedImage getConvertedImage(BufferedImage image){
+        int width=image.getWidth();
+        int height=image.getHeight();
+        BufferedImage convertedImage=null;
+        Graphics2D g2D=null;
+        //ï¿½ï¿½ï¿½Ã´ï¿½1 ï¿½Ö½ï¿½alphaï¿½ï¿½TYPE_4BYTE_ABGRï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ØµÄ²ï¿½ï¿½ï¿½Í¸ï¿½ï¿½
+        convertedImage=new BufferedImage(width, height, BufferedImage.TYPE_USHORT_555_RGB);
+        g2D = (Graphics2D) convertedImage.getGraphics();
+        g2D.drawImage(image, 0, 0, null);
+        g2D.drawImage(convertedImage, 0, 0, null);
+        g2D.dispose();
+        return convertedImage;
+    }
+
+    public static void main(String[] args)
+    {
         GuiCamera cam= new GuiCamera("d:\\111\\Hello", "png");//
-        BufferedImage screenshot = screenShot(); 
-        cam.snapShot(screenshot,"JPG"); 
-    } 
+        BufferedImage screenshot = screenShot();
+        cam.snapShot(screenshot,"JPG");
+    }
     public static int getWidth(){
-    	return (int)d.getWidth();
+        return (int)d.getWidth();
     }
     public static int getHeight(){
-    	return (int)d.getHeight();
+        return (int)d.getHeight();
     }
 }
